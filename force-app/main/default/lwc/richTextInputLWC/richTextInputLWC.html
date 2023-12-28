@@ -1,0 +1,24 @@
+<template>
+    <lightning-card variant="Narrow" title="Rich Text Area Field in LWC" icon-name="standard:account">
+        <div class="slds-p-horizontal_small">
+            <lightning-input-rich-text value={fieldValue} 
+                                       label={fieldLabel} 
+                                       label-visible
+                                       required={required} 
+                                       formats={allowedFormats} 
+                                       valid={validity}
+                                       class="visibleLines"
+                                       onchange={handleChange}             
+                                       share-with-entity-id={recordId}
+                                       message-when-bad-input={errorMessage}>
+            </lightning-input-rich-text>
+        </div>
+    </lightning-card>
+    <br/>
+    <lightning-card variant="Narrow" title="Rich Text Area Field Output" icon-name="standard:account">
+        <div class="slds-p-horizontal_small">
+            <lightning-formatted-rich-text value={fieldValue}></lightning-formatted-rich-text>
+        </div>
+    </lightning-card>        
+       
+</template>

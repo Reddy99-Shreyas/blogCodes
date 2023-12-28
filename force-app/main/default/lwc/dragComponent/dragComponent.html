@@ -1,0 +1,130 @@
+<template>
+    <div style="background-color:#ffffff;">
+        <div class="slds-page-header slds-page-header_record-home">
+            <div class="slds-page-header__row">
+                <div class="slds-page-header__col-title">
+                    <span class="slds-page-header__title slds-truncate" title="Acme - 1,200 Widgets"> DYN-FORMS</span>
+                    <div class="slds-media">
+                        <div class="slds-media__figure">
+                        </div>
+                        <div class="slds-media__body">
+                            <div class="slds-page-header__name">
+                                <div class="slds-page-header__name-title">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-page-header__col-actions">
+                    <div class="slds-page-header__controls">
+                        <div class="slds-page-header__control">
+                            <lightning-combobox name="progress" value={value} variant="label-hidden"
+                                placeholder="Select Progress" options={options} onchange={handleChange}>
+                            </lightning-combobox>
+                        </div>
+                        <div class="slds-page-header__control">
+                            <ul class="slds-button-group-list">
+                                <li>
+                                    <button class="slds-button slds-button_neutral"> Reset </button>
+                                </li>
+
+                                <li>
+                                    <button class="slds-button slds-button_neutral"> Save</button>
+                                </li>
+                                <li>
+                                    <lightning-button variant="success" label="Preview" icon-name="utility:preview"
+                                        icon-position="right" class="slds-m-left_x-small"></lightning-button>
+
+                                </li>
+                                <li>
+                                    <lightning-button variant="destructive" label="Delete" title="Delete action"
+                                        icon-name="utility:delete" icon-position="right" class="slds-m-left_x-small">
+                                    </lightning-button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <lightning-layout multiple-rows>
+            <lightning-layout-item size="4" padding="around-small">
+                <lightning-card variant="Narrow">
+                    <lightning-layout multiple-rows>
+                        <lightning-layout-item size="6" padding="around-small">
+                            <div class="slds-p-bottom_medium" draggable="true" data-item="text"
+                                ondragstart={handleDragText}>
+                                <lightning-icon icon-name="utility:text" size="small"> </lightning-icon>
+                                <b> Text Field</b>
+                            </div>
+                            <div class="slds-p-bottom_medium" draggable="true" data-item="Number"
+                                ondragstart={handleDragText}>
+                                <lightning-icon icon-name="utility:number_input" size="small"> </lightning-icon>
+                                <b> Number Field </b>
+                            </div>
+                            <div class="slds-p-bottom_medium" draggable="true" data-item="picklist"
+                                ondragstart={handleDragText}>
+                                <lightning-icon icon-name="utility:picklist" size="small"> </lightning-icon>
+                                <b> Picklist Field </b>
+                            </div>
+                            <div class="slds-p-bottom_medium" draggable="true" data-item="checkbox"
+                                ondragstart={handleDragText}>
+                                <lightning-icon icon-name="utility:check" size="small"> </lightning-icon>
+                                <b> Checkbox Field </b>
+                            </div>
+                            <div class="slds-p-bottom_medium" draggable="true" data-item="password"
+                                ondragstart={handleDragText}>
+                                <lightning-icon icon-name="utility:password" size="small"> </lightning-icon>
+                                <b> Password Field </b>
+                            </div>
+                            <div class="slds-p-bottom_medium" draggable="true" data-item="datetime"
+                                ondragstart={handleDragText}>
+                                <lightning-icon icon-name="utility:date_time" size="small">
+                                </lightning-icon>
+                                <b> Datetime Field </b>
+
+                            </div>
+                            <div class="slds-p-bottom_medium" draggable="true" data-item="rich text"
+                                ondragstart={handleDragText}>
+                                <lightning-icon icon-name="utility:display_rich_text" size="small">
+                                </lightning-icon>
+                                <b> Rich Text Area </b>
+                            </div>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6" padding="around-small">
+                            <div class="slds-p-bottom_medium" draggable="true" data-item="email"
+                                ondragstart={handleDragText}>
+                                <lightning-icon icon-name="utility:email" size="small"></lightning-icon>
+                                <b> Email Field</b>
+                            </div>
+                            <div class="slds-p-bottom_medium" draggable="true" data-item="date"
+                                ondragstart={handleDragText}>
+                                <lightning-icon icon-name="utility:event" size="small"> </lightning-icon>
+                                <b> Date Field </b>
+                            </div>
+                            <div class="slds-p-bottom_medium" draggable="true" data-item="time"
+                                ondragstart={handleDragText}>
+                                <lightning-icon icon-name="utility:clock" size="small"> </lightning-icon>
+                                <b> Time Field </b>
+                            </div>
+                            <div class="slds-p-bottom_medium" draggable="true" data-item="url"
+                                ondragstart={handleDragText}>
+                                <lightning-icon icon-name="utility:link" size="small"> </lightning-icon>
+                                <b> Url Field </b>
+                            </div>
+                            <div class="slds-p-bottom_medium" draggable="true" data-item="Textarea"
+                                ondragstart={handleDragText}>
+                                <lightning-icon icon-name="utility:textarea" size="small">
+                                </lightning-icon>
+                                <b> Textarea Field </b>
+                            </div>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </lightning-card>
+            </lightning-layout-item>
+            <lightning-layout-item size="7" padding="around-small">
+                <c-drop-Cmp-Lwc colamsize={value}></c-drop-Cmp-Lwc>
+            </lightning-layout-item>
+        </lightning-layout>
+    </div>
+</template>
