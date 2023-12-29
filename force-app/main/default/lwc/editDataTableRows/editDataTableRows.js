@@ -8,17 +8,17 @@ import CONTACT_OBJECT from '@salesforce/schema/Contact';
 import LEAD_SOURCE from '@salesforce/schema/Contact.LeadSource';
 
 const ACTIONS = [
-    {label: 'View', name: 'view'},
-    {label: 'Edit', name: 'edit'},
-    {label: 'Delete', name: 'delete'}
+    { label: 'View', name: 'view' },
+    { label: 'Edit', name: 'edit' },
+    { label: 'Delete', name: 'delete' }
 ]
 
 const columns = [
-    { label: 'First Name', fieldName: 'FirstName', editable: true},
-    { label: 'Last Name', fieldName: 'LastName', editable: true},
-    { label: 'Title', fieldName: 'Title', editable: true},
-    { label: 'Phone', fieldName: 'Phone', type: 'phone', editable: true},
-    { label: 'Email', fieldName: 'Email', type: 'email', editable: true},
+    { label: 'First Name', fieldName: 'FirstName', editable: true },
+    { label: 'Last Name', fieldName: 'LastName', editable: true },
+    { label: 'Title', fieldName: 'Title', editable: true },
+    { label: 'Phone', fieldName: 'Phone', type: 'phone', editable: true },
+    { label: 'Email', fieldName: 'Email', type: 'email', editable: true },
     {
         label: 'Lead Source', fieldName: 'LeadSource', type: 'customPicklist', editable: true, typeAttributes: {
             options: { fieldName: 'pickListOptions' },
@@ -45,52 +45,52 @@ export default class EditDataTableRows extends LightningElement {
     showModal = false;
     selectedRecordId;
 
-    @wire(getContactBasedOnAccount, {accountId: '$recordId', pickList: '$leadSourceOptions'})
-    getContactOutput(result){
+    @wire(getContactBasedOnAccount, { accountId: '$recordId', pickList: '$leadSourceOptions' })
+    getContactOutput(result) {
         this.contactRefreshProp = result;
-        if(result.data){
+        if (result.data) {
             //this.contactData = result.data;
             console.log('Lead Source options populated');
-            this.contactData = result.data.map(currItem =>{
+            this.contactData = result.data.map(currItem => {
                 let pickListOptions = this.leadSourceOptions;
-                return{
+                return {
                     ...currItem,
                     pickListOptions: pickListOptions
                 }
             })
-        //console.log(JSON.stringify(this.contactData));
-        }else if(result.error){
+            //console.log(JSON.stringify(this.contactData));
+        } else if (result.error) {
             console.log('Error while loading contact');
         }
     }
 
-    @wire(getObjectInfo, {objectApiName: CONTACT_OBJECT}) 
+    @wire(getObjectInfo, { objectApiName: CONTACT_OBJECT })
     objectInfo;
 
-    @wire(getPicklistValues, {recordTypeId: '$objectInfo.data.defaultRecordTypeId',fieldApiName: LEAD_SOURCE})
-    wirePicklist({data,error}){
-        if(data){
+    @wire(getPicklistValues, { recordTypeId: '$objectInfo.data.defaultRecordTypeId', fieldApiName: LEAD_SOURCE })
+    wirePicklist({ data, error }) {
+        if (data) {
             this.leadSourceOptions = data.values;
-        }else if(error){
+        } else if (error) {
             console.log('Error while loading data', error);
         }
     }
-    
 
-    async saveHandler(event){
+
+    async saveHandler(event) {
         //updateRecord or Apex Class
 
         //Access the draft values
         let records = event.detail.draftValues; //Array of modified records
-        let updateRecordsArray = records.map((currItem)=>{
-            let fieldInput = {...currItem};
+        let updateRecordsArray = records.map((currItem) => {
+            let fieldInput = { ...currItem };
             return {
                 fields: fieldInput
             };
         });
 
         this.draftValues = [];
-        let updateRecordArrayPromise = updateRecordsArray.map(currItem => 
+        let updateRecordArrayPromise = updateRecordsArray.map(currItem =>
             updateRecord(currItem)
         );
 
@@ -98,7 +98,7 @@ export default class EditDataTableRows extends LightningElement {
 
         const toastEvent = new ShowToastEvent({
             title: 'Success',
-            message:'Records updated successfully',
+            message: 'Records updated successfully',
             variant: 'success',
         });
         this.dispatchEvent(toastEvent);
@@ -114,13 +114,13 @@ export default class EditDataTableRows extends LightningElement {
         this.editMode = false;
         this.showModal = false;
 
-        if(action.name === 'view'){
+        if (action.name === 'view') {
             this.viewMode = true;
             this.showModal = true;
-        }else if(action.name === 'edit'){
+        } else if (action.name === 'edit') {
             this.editMode = true;
             this.showModal = true;
-        }else if(action.name === 'delete'){
+        } else if (action.name === 'delete') {
             this.deleteHandler();
         }
     }
@@ -130,29 +130,29 @@ export default class EditDataTableRows extends LightningElement {
         try {
             await deleteRecord(this.selectedRecordId);
 
-            const event = new ShowToastEvent({
+            const evt = new ShowToastEvent({
                 title: 'Success',
                 message: 'Record deleted successfully',
                 variant: 'success'
             });
-            this.dispatchEvent(event);
+            this.dispatchEvent(evt);
 
             await refreshApex(this.contactRefreshProp);
-        }catch(error){
+        } catch (error) {
             console.log(error);
-            const event = new ShowToastEvent({
+            const evt = new ShowToastEvent({
                 title: 'Error',
                 message: error.body.message,
                 variant: 'error'
             });
-            this.dispatchEvent(event);
+            this.dispatchEvent(evt);
         }
-        
+
     }
 
-    async closeModal(event){
+    async closeModal(event) {
         this.showModal = false;
-        if(this.editMode){
+        if (this.editMode) {
             await refreshApex(this.contactRefreshProp);
         }
     }
